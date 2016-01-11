@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var formidable = require('express-formidable');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -23,10 +24,61 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(formidable.parse());
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/home', home);
+
+// my code temp
+
+//app.use(bodyParser());
+//
+//app.get('/', function(req, res){
+//    res.render('index.html');
+//});
+//
+////var main_server = require('./tools/main_server.js');
+//
+//app.post('/', function(req, res){
+//    var form = new formidable.IncomingForm();
+//    form.on('field', function (field, value) {
+//        console.log(field);
+//        console.log(value);
+//        fields[field] = value;
+//    });
+//    //main_server.process_form(req, res);
+//    //var userName = req.body.city;
+//    console.log((fields))
+//    var html = 'Hello: ' + userName + '.<br>' +
+//        '<a href="/">Try again.</a>';
+//    res.send(html);
+//});
+
+
+//
+
+// login routes
+//var main_server = require('./tools/main_server.js');
+
+//noinspection JSUnresolvedFunction,JSUnresolvedFunction
+//app.route('/home')// if change this also change in the html under "action"
+//    // show the form (GET http://localhost:8080/login)
+//    .get(function(req, res) {
+//        res.render('index.html');
+//    })
+//
+//    // process the form (POST http://localhost:8080/login)
+//    .post(function(req, res) {
+//        var str = main_server.process_form(req, res);
+//        console.log('processing' + str);
+//
+//        res.send('processing the login form!' + str);
+//    });
+
+
+
+
 
 
 // catch 404 and forward to error handler

@@ -17,12 +17,28 @@ function mongo_init(mongoose, url){
     //define schema for data - Schema types: http://mongoosejs.com/docs/schematypes.html
     var Schema = mongoose.Schema;
     var formSchema = new Schema({
-        first_name : String,
-        last_name : String,
+        agent : String,
+        apt_status : String,
+        apt_number : Number,
+        balcony : String,
         city : String,
-        house_number : Number,
+        contract : String,
         email : String,
-        description: String,
+        floor_number : Number,
+        date : Date,
+        opentext : String,
+        front_back : String,
+        furnished : String,
+        house_number : Number,
+        parking : String,
+        partners : String,
+        percentage_rise: Number,
+        price : Number,
+        room_number : Number,
+        size : Number,
+        split : String,
+        street : String,
+        years_since : String,
         doc_updated: Date,
         doc_created:  { type: Date, default: Date.now }
     }, {collection : 'forms'});
@@ -59,7 +75,10 @@ function insert_doc(app_mongo, jsonObj) {
     var Model_obj = mongoose.model('Form', Form);
     var document_obj = new Model_obj(jsonObj);
     document_obj.save(function(err,data){
-        if (err) console.log(err);
+        if (err) {
+            console.log(err);
+            console.log('Error in saving to mongo');
+        }
         else {
             console.log('Doc was saved to mongo: ', data);
         }

@@ -1,22 +1,70 @@
 var express = require('express');
 var router = express.Router();
 
-var main_server = require('../tools/main_server.js');
+//var http = require('http');
+//var fs = require('fs');
+//var formidable = require("formidable");
+//var util = require('util');
+var jsonfile = require('jsonfile');
+var dataapi = require('../tools/data_api.js');
+var mongoose = require('mongoose');
+
+// declare mongo variables
+var server = '127.0.0.1';
+var port = 27017;
+var database_name = 'test';
+
+// start mongo
+var url = 'mongodb://' + server + ':' + port + '/' + database_name;
+var app_mongo = dataapi.mongo_init(mongoose, url);
+
 
 /* GET home listing. */
 router.get('/', function(req, res, next) {
   res.render('index.html');
-    console.log('street: ' + req.body);
 });
 
-
 router.post('/', function(req, res, next) {
-  //console.log("press post");
-  //res.render('index.html');
-  //  console.log('street: ' + req.body.street);
-  //  console.log('city: ' + req.body.city);
-  //main_server.process_form(req, res);
-  //    console.log('street: ' + req.body);
+  console.log('got Form post req, start saving to mongo');
+  //set json to insertion
+  var jsonObj = req.body;
+  //write json to Mongo:
+  var doc_id = dataapi.insert_doc(app_mongo, jsonObj);
+  console.log('finish saving form json to mongo');
+
+  //agent = req.body.agent;
+  //apt_status = req.body.apt_status;
+  //apt_number = req.body.apt_number;
+  //balcony = req.body.balcony;
+  //city = req.body.city;
+  //contract_duration = req.body.contract_duration;
+  //email = req.body.email;
+  //floor_number = req.body.floor_number;
+  //date = req.body.date;
+  //opentext = req.body.opentext;
+  //front_back = req.body.front_back;
+  //furnished = req.body.furnished;
+  //house_number = req.body.house_number;
+  //parking = req.body.parking;
+  //partners = req.body.partners;
+  //percentage_rise = req.body.percentage_rise;
+  //price = req.body.price;
+  //room_number = req.body.room_number;
+  //size =  req.body.size;
+  //split = req.body.split;
+  //street = req.body.street;
+  //years_since = req.body.years_since;
+
+  // write json to HD:
+  var file_name = '/Users/Omri/Downloads/temp/' + doc_id + '.json';
+  console.log('\nwriting json to file on disk\n');
+  res.write(file_name);
+  jsonfile.writeFileSync(file_name, jsonObj);
+  console.log(file_name);
+  console.log('\ndone writing json file to disk\n\n');
+
+  res.end("\nyes");
+
 });
 
 module.exports = router;
