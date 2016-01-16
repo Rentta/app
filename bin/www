@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 
+//nodemon www
+
 var app = require('../app');
 var debug = require('debug')('main_app:server');
 var http = require('http');

@@ -2,9 +2,9 @@
 // * Created by Omri on 03/01/2016.
 // */
 //
-function mongo_init(mongoose, url){
+function mongo_init(mongoose, uri){
     //mongoose.connect('mongodb://localhost:27017/test');
-    mongoose.connect(url);
+    mongoose.connect(uri);
 
     var db = mongoose.connection;
     db.on('error', function (err) {

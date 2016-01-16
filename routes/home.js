@@ -8,16 +8,21 @@ var router = express.Router();
 var jsonfile = require('jsonfile');
 var dataapi = require('../tools/data_api.js');
 var mongoose = require('mongoose');
+var config = require('config');
+
+var mongo_config = config.get('main.mongo');
 
 // declare mongo variables
-var server = '127.0.0.1';
-var port = 27017;
-var database_name = 'test';
+var server = config.get('main.mongo.host');
+var port = config.get('main.mongo.port');
+var database_name = config.get('main.mongo.db_name');
+var user = config.get('main.mongo.user');
+var password = config.get('main.mongo.password');
 
 // start mongo
-var url = 'mongodb://' + server + ':' + port + '/' + database_name;
-var app_mongo = dataapi.mongo_init(mongoose, url);
-
+var uri = 'mongodb://' + user + ':' + password + '@' + server + ':' + port + '/' + database_name;
+//var uri = 'mongodb://' + server + ':' + port + '/' + database_name;
+var app_mongo = dataapi.mongo_init(mongoose, uri);
 
 /* GET home listing. */
 router.get('/', function(req, res, next) {
